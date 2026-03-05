@@ -1,138 +1,146 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x64">
-      <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x64">
-      <Configuration>Release</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
+#include <iostream>
+#include <string>
+#include <limits>
+#include <ctime>
+#include <cstdlib>
+#include <stdexcept>
 
-  </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <VCProjectVersion>18.0</VCProjectVersion>
-    <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{64fed6d2-8481-4faa-be4f-7f56dc50c030}</ProjectGuid>
-    <RootNamespace>vendingmachinesimplecpp</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
+using namespace std;
 
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared" >
-  </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
+// Свой класс исключения для автомата
+class MachineError : public exception {
+private:
+    string msg;
+public:
+    MachineError(const string& m) : msg(m) {}
+    const char* what() const noexcept override {
+        return msg.c_str();
+    }
+};
 
-  <PropertyGroup Label="UserMacros" />
+// Структура напитка
+struct Drink {
+    string name;
+    double price;
+};
 
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-       <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-       <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-       <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-       <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
+// Класс автомата
+class VendingMachine {
+private:
+    Drink drinks[3];
+    double balance;
+    
+public:
+    VendingMachine() : balance(0) {
+        drinks[0] = {"Кола", 50};
+        drinks[1] = {"Фанта", 45};
+        drinks[2] = {"Спрайт", 55};
+    }
+    
+    void addMoney(double sum) {
+        if (sum < 0) {
+            throw invalid_argument("Сумма не может быть меньше 0");
+        }
+        balance = sum;
+        cout << "Внесено: " << balance << " руб.\n";
+    }
+    
+    void buy(int num) {
+        // Поломка с вероятностью 20%
+        if (rand() % 5 == 0) {
+            throw MachineError("Автомат сломался!");
+        }
+        
+        if (num < 1 || num > 3) {
+            throw out_of_range("Нет такого напитка");
+        }
+        
+        if (balance < drinks[num-1].price) {
+            throw MachineError("Мало денег");
+        }
+        
+        cout << "\nВы получили: " << drinks[num-1].name << endl;
+        cout << "Сдача: " << balance - drinks[num-1].price << " руб.\n";
+        balance -= drinks[num-1].price;
+    }
+    
+    void showMenu() {
+        cout << "\n--- МЕНЮ ---\n";
+        for (int i = 0; i < 3; i++) {
+            cout << i+1 << ". " << drinks[i].name 
+                 << " - " << drinks[i].price << " руб.\n";
+        }
+        if (balance > 0) {
+            cout << "Баланс: " << balance << " руб.\n";
+        }
+    }
+    
+    double getBalance() {
+        return balance;
+    }
+};
 
-  <ItemGroup></ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
-</Project>
+// Ввод числа с проверкой
+double inputNumber() {
+    double x;
+    cin >> x;
+    
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(10000, '\n');
+        throw invalid_argument("Ошибка: нужно вводить числа");
+    }
+    return x;
+}
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    srand(time(0));
+    
+    VendingMachine vm;
+    double money;
+    int choice;
+    
+    cout << "АВТОМАТ С ГАЗИРОВКОЙ\n";
+    
+    while (true) {
+        try {
+            // Ввод денег
+            cout << "\nСколько денег внести? (0 - выход): ";
+            money = inputNumber();
+            
+            if (money == 0) {
+                cout << "До свидания!\n";
+                break;
+            }
+            
+            vm.addMoney(money);
+            
+            // Показ меню и выбор
+            vm.showMenu();
+            cout << "Выберите напиток (1-3): ";
+            choice = (int)inputNumber();
+            
+            // Покупка
+            vm.buy(choice);
+            
+        }
+        catch (const out_of_range& e) {
+            cout << "Ошибка: " << e.what() << endl;
+        }
+        catch (const MachineError& e) {
+            cout << "Ошибка: " << e.what() << endl;
+            if (string(e.what()) == "Автомат сломался!") {
+                cout << "Вызвали мастера. Работаем дальше.\n";
+            }
+        }
+        catch (const invalid_argument& e) {
+            cout << "Ошибка: " << e.what() << endl;
+        }
+        catch (...) {
+            cout << "Неизвестная ошибка!\n";
+        }
+    }
+    
+    return 0;
+}
