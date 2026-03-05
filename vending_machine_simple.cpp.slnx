@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="vending_machine_simple.cpp/vending_machine_simple.cpp.vcxproj" />
+</Solution>
